@@ -79,4 +79,20 @@ public class IPokedexTest {
         Assertions.assertThatThrownBy(() -> this.pokedex.getPokemon(secondInvalidIndex)).isInstanceOf(PokedexException.class);
 
     }
+
+
+    @Test
+    public void GetPokemonsTest(){
+
+        List<Pokemon> TestPokemonsList = Collections.unmodifiableList(this.pokemons);
+
+        Mockito.doReturn(TestPokemonsList).when(this.pokedex).getPokemons();
+
+        //Use of AssertJ in JUnit5
+        assertThat(this.pokedex.getPokemons().getClass()).isEqualTo(TestPokemonsList.getClass());
+        assertThat(this.pokedex.getPokemons().size()).isEqualTo(TestPokemonsList.size());
+        assertThat(this.pokedex.getPokemons().get(0)).isEqualTo(TestPokemonsList.get(0));
+        assertThat(this.pokedex.getPokemons().get(1)).isEqualTo(TestPokemonsList.get(1));
+
+    }
 }

@@ -95,4 +95,37 @@ public class IPokedexTest {
         assertThat(this.pokedex.getPokemons().get(1)).isEqualTo(TestPokemonsList.get(1));
 
     }
+
+
+    @Test
+    public void GetPokemonsOrdered(){
+
+        PokemonComparators nComparator = PokemonComparators.NAME;
+        PokemonComparators iComparator = PokemonComparators.INDEX;
+        PokemonComparators cpComparator = PokemonComparators.CP;
+
+        List<Pokemon> nPokemonsOrdered = new ArrayList<>(this.pokemons);
+        nPokemonsOrdered.sort(nComparator);
+
+        List<Pokemon> iPokemonsOrdered = new ArrayList<>(this.pokemons);
+        iPokemonsOrdered.sort(iComparator);
+
+        List<Pokemon> cpPokemonsOrdered = new ArrayList<>(this.pokemons);
+        cpPokemonsOrdered.sort(cpComparator);
+
+        List<Pokemon> edTestPokemonsList = Collections.unmodifiableList(new ArrayList<>());
+
+
+        Mockito.doReturn(Collections.unmodifiableList(nPokemonsOrdered)).when(this.pokedex).getPokemons(nComparator);
+        Mockito.doReturn(Collections.unmodifiableList(iPokemonsOrdered)).when(this.pokedex).getPokemons(iComparator);
+        Mockito.doReturn(Collections.unmodifiableList(cpPokemonsOrdered)).when(this.pokedex).getPokemons(cpComparator);
+
+        //Use of AssertJ in JUnit5
+        assertThat(this.pokedex.getPokemons(nComparator).getClass()).isEqualTo(edTestPokemonsList.getClass());
+        assertThat(this.pokedex.getPokemons(iComparator).size()).isEqualTo(iPokemonsOrdered.size());
+        assertThat(this.pokedex.getPokemons(nComparator).get(0)).isEqualTo(aquali);
+        assertThat(this.pokedex.getPokemons(iComparator).get(0)).isEqualTo(bulbizarre);
+        assertThat(this.pokedex.getPokemons(cpComparator).get(0)).isEqualTo(bulbizarre);
+
+    }
 }

@@ -10,7 +10,7 @@ import java.util.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class IPokedexTest {
-    private IPokedex pokedex;
+    private Pokedex pokedex;
     private List<Pokemon> pokemons;
     private Pokemon bulbizarre;
     private Pokemon aquali;
@@ -18,7 +18,7 @@ public class IPokedexTest {
     @Before
     public void setUp(){
 
-        this.pokedex = Mockito.mock(IPokedex.class);
+        this.pokedex = Mockito.mock(Pokedex.class);
         pokemons = new ArrayList<>();
 
         //pokemons.add(new Pokemon(0,"Bulbizarre",126,126,90,613,64,4000,4,56.0));

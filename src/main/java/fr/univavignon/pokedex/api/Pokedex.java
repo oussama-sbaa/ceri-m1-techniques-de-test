@@ -5,14 +5,19 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 public class Pokedex implements IPokedex{
-    private final List<Pokemon> pokemonList;
+
+    private final List<Pokemon> pokemonList = new ArrayList<>();
+
+    private IPokemonMetadataProvider metadataProvider;
+
+    private IPokemonFactory pokemonFactory;
 
     public Pokedex() {
-        pokemonList = new ArrayList<>();
-        Pokemon  bulbizarre = new Pokemon(0, "Bulbizarre", 126, 126, 90, 613, 64, 4000, 4, 56.0);
-        Pokemon  aquali =  new Pokemon(133, "Aquali", 186, 186, 260, 2729, 202, 5000, 4, 100.0);
-        pokemonList.add(bulbizarre);
-        pokemonList.add(aquali);
+    }
+
+    public Pokedex(IPokemonMetadataProvider metadataProvider, IPokemonFactory pokemonFactory) {
+        this.metadataProvider = metadataProvider;
+        this.pokemonFactory = pokemonFactory;
     }
 
     @Override
@@ -23,7 +28,7 @@ public class Pokedex implements IPokedex{
     @Override
     public int addPokemon(Pokemon pokemon) {
         pokemonList.add(pokemon);
-        return size()+1;
+        return this.size();
     }
 
     @Override

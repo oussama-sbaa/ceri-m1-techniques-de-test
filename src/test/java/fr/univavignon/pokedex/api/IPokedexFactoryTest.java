@@ -14,7 +14,7 @@ public class IPokedexFactoryTest {
 
     @Before
     public void setUp(){
-        this.pokedexFactory = Mockito.mock(IPokedexFactory.class);
+        this.pokedexFactory = new PokedexFactory();
 
     }
 
@@ -26,15 +26,8 @@ public class IPokedexFactoryTest {
         IPokemonMetadataProvider pokemonMetadataProvider= Mockito.mock(IPokemonMetadataProvider.class);
         IPokemonFactory pokemonFactory = Mockito.mock(IPokemonFactory.class);
 
-
-        Mockito.doReturn(Mockito.mock(Pokedex.class)).when(this.pokedexFactory).createPokedex(Mockito.any(pokemonMetadataProvider.getClass()),Mockito.any(pokemonFactory.getClass()));
-
-
-        Pokedex mockPokedex = Mockito.mock(Pokedex.class);
-        IPokedex createdPokedex = pokedexFactory.createPokedex(Mockito.mock(IPokemonMetadataProvider.class), Mockito.mock(IPokemonFactory.class));
-
         //use of AssertJ in Junit5
-        assertThat(createdPokedex.getClass()).isEqualTo(mockPokedex.getClass());
+        assertThat(pokedexFactory.createPokedex(pokemonMetadataProvider,pokemonFactory).getClass()).isEqualTo(Pokedex.class);
 
     }
 }

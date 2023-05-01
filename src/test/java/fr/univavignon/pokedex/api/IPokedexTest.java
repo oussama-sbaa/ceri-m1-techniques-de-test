@@ -4,7 +4,6 @@ import org.assertj.core.api.Assertions;
 import org.junit.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import org.mockito.Mockito;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -17,8 +16,7 @@ public class IPokedexTest {
 
     @Before
     public void setUp(){
-
-        this.pokedex = Mockito.mock(Pokedex.class);
+        pokedex = new Pokedex();
         pokemons = new ArrayList<>();
 
         //pokemons.add(new Pokemon(0,"Bulbizarre",126,126,90,613,64,4000,4,56.0));
@@ -28,8 +26,9 @@ public class IPokedexTest {
         aquali = new Pokemon(133,"Aquali",186,186,260,2729,202,5000,4,100.0);
 
         //add bulbizarre & aquali to the list
-        pokemons.add(bulbizarre);
-        pokemons.add(aquali);
+        pokedex.addPokemon(bulbizarre);
+        this.pokedex.addPokemon(aquali);
+        pokemons = pokedex.getPokemons();
     }
 
     @Test
@@ -37,12 +36,9 @@ public class IPokedexTest {
     @DisplayName("Returns the number of pokemon this pokedex contains")
     public void sizeTest(){
 
-        //Mock
-        Mockito.doReturn(this.pokemons.size()).when(this.pokedex).size();
 
         //use of AssertJ in Junit5
-        assertThat(this.pokedex.size()).isEqualTo(2);
-
+        assertThat(pokemons.size()).isEqualTo(2);
     }
 
     @Test
@@ -52,11 +48,8 @@ public class IPokedexTest {
 
         Pokemon newPokemon = new Pokemon(133, "Aquali", 186, 186, 260, 2729, 202, 5000, 4, 100.0);
 
-        //Mock
-        //Mockito.doReturn(newPokemon.getIndex()).when(this.pokedex).addPokemon(newPokemon);
-        Mockito.doReturn(this.pokemons.size()+1).when(this.pokedex).addPokemon(newPokemon);
         //assertThat(this.pokedex.addPokemon(newPokemon)).isEqualTo(newPokemon.getIndex());
-        assertThat(this.pokedex.addPokemon(newPokemon)).isEqualTo(3);
+        assertThat(this.pokedex.addPokemon(newPokemon)).isEqualTo(pokemons.size());
     }
 
 
@@ -66,16 +59,14 @@ public class IPokedexTest {
     public void getPokemonTest() throws PokedexException {
 
 
-        int aqualiIndex = 133, bulbizarreIndex = 0, firstInvalidIndex = 170, secondInvalidIndex = -20;
+        int aqualiIndex = 1, bulbizarreIndex = 0, firstInvalidIndex = 170, secondInvalidIndex = -20;
 
-        //Mock
-        Mockito.doReturn(aquali).when(this.pokedex).getPokemon(aqualiIndex);
-        Mockito.doReturn(bulbizarre).when(this.pokedex).getPokemon(bulbizarreIndex);
-        Mockito.doThrow(new PokedexException("invalid given index")).when(this.pokedex).getPokemon(Mockito.intThat(i -> i < 0 || i > 150));
-
-        //Use of AssertThat in JUnit5
-        assertThat(this.pokedex.getPokemon(0)).isEqualTo(bulbizarre);
-        assertThat(this.pokedex.getPokemon(133)).isEqualTo(aquali);
+        assertThat(this.pokedex.getPokemon(aqualiIndex)).isEqualTo(aquali);
+        assertThat(this.pokedex.getPokemon(bulbizarreIndex)).isEqualTo(bulbizarre);
+        assertThat(this.pokedex.getPokemon(aqualiIndex).getName()).isEqualTo(aquali.getName());
+        assertThat(this.pokedex.getPokemon(bulbizarreIndex).getAttack()).isEqualTo(bulbizarre.getAttack());
+        assertThat(this.pokedex.getPokemon(aqualiIndex).getDefense()).isEqualTo(aquali.getDefense());
+        assertThat(this.pokedex.getPokemon(bulbizarreIndex).getStamina()).isEqualTo(bulbizarre.getStamina());
 
         //Use of AssertThat in JUnit5
         Assertions.assertThatThrownBy(() -> this.pokedex.getPokemon(firstInvalidIndex)).isInstanceOf(PokedexException.class);
@@ -90,9 +81,6 @@ public class IPokedexTest {
     public void getPokemonsTest(){
 
         List<Pokemon> TestPokemonsList = Collections.unmodifiableList(this.pokemons);
-
-        //Mock
-        Mockito.doReturn(TestPokemonsList).when(this.pokedex).getPokemons();
 
         //Use of AssertJ in JUnit5
         assertThat(this.pokedex.getPokemons().getClass()).isEqualTo(TestPokemonsList.getClass());
@@ -122,11 +110,6 @@ public class IPokedexTest {
         cpPokemonsOrdered.sort(cpComparator);
 
         List<Pokemon> edTestPokemonsList = Collections.unmodifiableList(new ArrayList<>());
-
-        //Mock
-        Mockito.doReturn(Collections.unmodifiableList(nPokemonsOrdered)).when(this.pokedex).getPokemons(nComparator);
-        Mockito.doReturn(Collections.unmodifiableList(iPokemonsOrdered)).when(this.pokedex).getPokemons(iComparator);
-        Mockito.doReturn(Collections.unmodifiableList(cpPokemonsOrdered)).when(this.pokedex).getPokemons(cpComparator);
 
         //Use of AssertJ in JUnit5
         assertThat(this.pokedex.getPokemons(nComparator).getClass()).isEqualTo(edTestPokemonsList.getClass());

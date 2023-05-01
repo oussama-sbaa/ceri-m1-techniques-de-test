@@ -15,7 +15,7 @@ public class IPokemonMetadataProviderTest {
     @Before
     public void setUp(){
 
-        this.metadataProvider = Mockito.mock(IPokemonMetadataProvider.class);
+        this.metadataProvider = new PokemonMetadataProvider();
         this.bulbizarre = new PokemonMetadata(0, "Bulbizarre", 126, 126, 90);
         this.aquali = new PokemonMetadata(133, "Aquali", 186, 168, 260);
 
@@ -28,14 +28,10 @@ public class IPokemonMetadataProviderTest {
 
         int bulbizarreIndex = 0, aqualiIndex = 133, firstInvalidIndex = -4, secondInvalidIndex = 160;
 
-        Mockito.doReturn(this.bulbizarre).when(metadataProvider).getPokemonMetadata(bulbizarreIndex);
-        Mockito.doReturn(this.aquali).when(metadataProvider).getPokemonMetadata(aqualiIndex);
-        Mockito.doThrow(new PokedexException("invalid given index")).when(metadataProvider).getPokemonMetadata(Mockito.intThat(i -> i < 0 || i > 150));
 
         //use of AssertJ in Junit5
-        assertThat(this.bulbizarre).isEqualTo(metadataProvider.getPokemonMetadata(bulbizarreIndex));
-        assertThat(this.aquali).isEqualTo(metadataProvider.getPokemonMetadata(aqualiIndex));
-
+        assertThat(this.bulbizarre.getIndex()).isEqualTo(metadataProvider.getPokemonMetadata(bulbizarreIndex).getIndex());
+        assertThat(this.aquali.getDefense()).isEqualTo(metadataProvider.getPokemonMetadata(aqualiIndex).getDefense());
 
         Throwable thrownException = catchThrowable(() -> metadataProvider.getPokemonMetadata(firstInvalidIndex));
         assertThat(thrownException).isInstanceOf(PokedexException.class);

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Tag;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 
 public class IPokedexTest {
     private Pokedex pokedex;
@@ -117,6 +118,23 @@ public class IPokedexTest {
         assertThat(this.pokedex.getPokemons(nComparator).get(0)).isEqualTo(aquali);
         assertThat(this.pokedex.getPokemons(iComparator).get(0)).isEqualTo(bulbizarre);
         assertThat(this.pokedex.getPokemons(cpComparator).get(0)).isEqualTo(bulbizarre);
+    }
+
+    @Test
+    @Tag("Pokedex")
+    @DisplayName("")
+    public void canCreatePokemonTest(){
+
+        assertThat(pokedex.createPokemon(133, 2729, 202, 5000, 4).getName()).isEqualTo(aquali.getName());
+    }
+
+    @Test
+    @Tag("Pokedex")
+    @DisplayName("")
+    public void getPokemonMetadataTest() throws PokedexException {
+
+        assertThrows(PokedexException.class, () -> pokedex.getPokemonMetadata(-1));
+        assertThat(pokedex.getPokemonMetadata(133).getName()).isEqualTo(aquali.getName());
 
     }
 }

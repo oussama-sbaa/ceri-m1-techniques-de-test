@@ -25,9 +25,57 @@ jobs:
           command: mvn test
       - codecov/upload:
           file: /target/site/jacoco/jacoco.xml
+  docs:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run:
+          name: install1
+          command: sudo add-apt-repository ppa:openjdk-r/ppa
+      - run:
+          name: install2
+          command: sudo apt-get update
+      - run:
+          name: install3
+          command: sudo apt-get install openjdk-11-jdk-headless -y
+      - run:
+          name: Build-docs
+          command: javadoc src/main/java/fr/univavignon/pokedex/api/* -d docs
+      - persist_to_workspace:
+          root: .
+          paths: docs
+    docs-deploy:
+      docker:
+        - image: node:8.10.0
+      steps:
+        - checkout
+        - attach_workspace:
+            at: docs/
+        - run:
+            name: Install and configure dependencies
+            command: |
+              npm install -g --silent gh-pages@2.0.1
+              git config user.email "sbaa.oussama07@gmail.com"
+              git config user.name "oussama-sbaa"
+        - add_ssh_keys:
+            fingerprints:
+              - "8c:2e:eb:85:d9:39:6d:62:c2:35:36:5e:24:f7:c4:cd"
+        - run:
+            name: Deploy docs to gh-pages branch
+            command: gh-pages --dist docs/
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
 workflows:
+  version: 2
   c-i:
     jobs:
       - build-test
+      - docs
+          - docs-deploy:
+          requires:
+            - build-and-test
+            - docs
+          filters:
+            branches:
+              only: master

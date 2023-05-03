@@ -54,7 +54,7 @@ jobs:
             git config user.name "oussama-sbaa"
       - add_ssh_keys:
           fingerprints:
-            - "8c:2e:eb:85:d9:39:6d:62:c2:35:36:5e:24:f7:c4:cd"
+            - "07:46:fd:0c:37:7d:00:03:f2:17:a4:e0:2f:fc:45:60"
       - run:
           name: Deploy docs to gh-pages branch
           command: gh-pages --dist docs/

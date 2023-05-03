@@ -72,7 +72,7 @@ workflows:
     jobs:
       - build-test
       - docs
-          - docs-deploy:
+      - docs-deploy:
           requires:
             - build-and-test
             - docs

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Tag;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 
@@ -25,7 +24,7 @@ public class IPokemonFactoryTest {
 
     @Test
     @Tag("PokemonFactory")
-    @DisplayName("Creates a pokemon instance computing it IVs")
+    @DisplayName("canCreatePokemon")
     public void CreatePokemonTest(){
 
         int bulbizarreIndex = 0, bulbizarreCp = 613, bulbizarreHp = 64, bulbizarreDust = 4000, bulbizarreCandy = 4;
@@ -34,13 +33,16 @@ public class IPokemonFactoryTest {
 
         assertNull(pokemonFactory.createPokemon(invalidIndex, bulbizarreCp, bulbizarreHp, bulbizarreDust, bulbizarreCandy));
 
-        //use of AssertJ in Junit5
-        assertThat(pokemonFactory.createPokemon(bulbizarreIndex, bulbizarreCp, bulbizarreHp, bulbizarreDust, bulbizarreCandy).getIndex()).isEqualTo(bulbizarre.getIndex());
-        assertThat(pokemonFactory.createPokemon(aqualiIndex, aqualiCp, aqualiHp, aqualiDust, aqualiCandy).getIndex()).isEqualTo(aquali.getIndex());
-        assertThat(pokemonFactory.createPokemon(bulbizarreIndex, bulbizarreCp, bulbizarreHp, bulbizarreDust, bulbizarreCandy).getHp()).isEqualTo(bulbizarre.getHp());
-        assertThat(pokemonFactory.createPokemon(aqualiIndex, aqualiCp, aqualiHp, aqualiDust, aqualiCandy).getDust()).isEqualTo(aquali.getDust());
-        assertThat(pokemonFactory.createPokemon(bulbizarreIndex, bulbizarreCp, bulbizarreHp, bulbizarreDust, bulbizarreCandy).getCandy()).isEqualTo(bulbizarre.getCandy());
-
+        assertThat(pokemonFactory.createPokemon(bulbizarreIndex, bulbizarreCp, bulbizarreHp, bulbizarreDust, bulbizarreCandy).getIndex())
+                .isEqualTo(bulbizarre.getIndex());
+        assertThat(pokemonFactory.createPokemon(aqualiIndex, aqualiCp, aqualiHp, aqualiDust, aqualiCandy).getIndex())
+                .isEqualTo(aquali.getIndex());
+        assertThat(pokemonFactory.createPokemon(bulbizarreIndex, bulbizarreCp, bulbizarreHp, bulbizarreDust, bulbizarreCandy).getHp())
+                .isEqualTo(bulbizarre.getHp());
+        assertThat(pokemonFactory.createPokemon(aqualiIndex, aqualiCp, aqualiHp, aqualiDust, aqualiCandy).getDust())
+                .isEqualTo(aquali.getDust());
+        assertThat(pokemonFactory.createPokemon(bulbizarreIndex, bulbizarreCp, bulbizarreHp, bulbizarreDust, bulbizarreCandy).getCandy())
+                .isEqualTo(bulbizarre.getCandy());
         assertThat(pokemonFactory.createPokemon(aqualiIndex, aqualiCp, aqualiHp, aqualiDust, aqualiCandy).getIv())
                 .isEqualTo(aquali.getIv())
                 .isCloseTo(aquali.getIv(), Assertions.offset(0.1));

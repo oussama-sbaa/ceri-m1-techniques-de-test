@@ -3,7 +3,6 @@ package fr.univavignon.pokedex.api;
 import org.junit.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import org.mockito.Mockito;
 
 import static org.assertj.core.api.Assertions.*;
 public class IPokemonMetadataProviderTest {
@@ -22,22 +21,24 @@ public class IPokemonMetadataProviderTest {
     }
 
     @Test
-    @Tag("Pokémons")
-    @DisplayName("Retrieves and returns the metadata for the pokemon")
-    public void getPokemonMetadata() throws PokedexException {
+    @Tag("PokemonMetadataProvider")
+    @DisplayName("shouldGetPokemonMetadata")
+    public void getPokemonMetadataTest() throws PokedexException {
 
         int bulbizarreIndex = 0, aqualiIndex = 133, firstInvalidIndex = -4, secondInvalidIndex = 160;
 
-
-        //use of AssertJ in Junit5
-        assertThat(this.bulbizarre.getIndex()).isEqualTo(metadataProvider.getPokemonMetadata(bulbizarreIndex).getIndex());
-        assertThat(this.aquali.getDefense()).isEqualTo(metadataProvider.getPokemonMetadata(aqualiIndex).getDefense());
+        assertThat(this.bulbizarre.getIndex())
+                .isEqualTo(metadataProvider.getPokemonMetadata(bulbizarreIndex).getIndex());
+        assertThat(this.aquali.getDefense())
+                .isEqualTo(metadataProvider.getPokemonMetadata(aqualiIndex).getDefense());
 
         Throwable thrownException = catchThrowable(() -> metadataProvider.getPokemonMetadata(firstInvalidIndex));
-        assertThat(thrownException).isInstanceOf(PokedexException.class);
+        assertThat(thrownException)
+                .isInstanceOf(PokedexException.class);
 
         Throwable thrownException2 = catchThrowable(() -> metadataProvider.getPokemonMetadata(secondInvalidIndex));
-        assertThat(thrownException2).isInstanceOf(PokedexException.class);
+        assertThat(thrownException2)
+                .isInstanceOf(PokedexException.class);
 
     }
 }

@@ -4,7 +4,10 @@ import org.assertj.core.api.Assertions;
 import org.junit.* ;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import fr.univavignon.pokedex.imp.RocketPokemonFactory;
+
+/*** Test for RocketPokemonFactory for TP6  ***/
+//import fr.univavignon.pokedex.imp.RocketPokemonFactory;
+/*** Test for RocketPokemonFactory for TP6  ***/
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNull;

@@ -11,7 +11,6 @@ public class IPokemonTrainerFactoryTest {
 
     private IPokemonTrainerFactory pokemonTrainerFactory;
 
-
     @Before
     public void setUp(){
         this.pokemonTrainerFactory = Mockito.mock(IPokemonTrainerFactory.class);

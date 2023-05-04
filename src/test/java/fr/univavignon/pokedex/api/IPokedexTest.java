@@ -21,8 +21,6 @@ public class IPokedexTest {
         pokemons = new ArrayList<>();
         bulbizarre = new Pokemon(0,"Bulbizarre",126,126,90,613,64,4000,4,56.0);
         aquali = new Pokemon(133,"Aquali",186,186,260,2729,202,5000,4,100.0);
-
-        //add bulbizarre & aquali to the list
         pokedex.addPokemon(bulbizarre);
         this.pokedex.addPokemon(aquali);
         pokemons = pokedex.getPokemons();

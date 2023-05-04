@@ -30,7 +30,7 @@ public class IPokemonFactoryTest {
         this.aquali = new Pokemon(133, "Aquali", 186, 168, 260, 2729, 202, 5000, 4, 100);
     }
 
-     @Test
+    @Test
     @Tag("PokemonFactory")
     @DisplayName("canCreatePokemon")
     public void CreatePokemonTest(){
@@ -92,4 +92,5 @@ public class IPokemonFactoryTest {
     }*/
 
     /******************* Test for RocketPokemonFactory for TP6 *******************/
+
 }

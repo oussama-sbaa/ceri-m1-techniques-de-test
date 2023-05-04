@@ -29,14 +29,17 @@ public class IPokemonMetadataProviderTest {
 
         assertThat(this.bulbizarre.getIndex())
                 .isEqualTo(metadataProvider.getPokemonMetadata(bulbizarreIndex).getIndex());
+
         assertThat(this.aquali.getDefense())
                 .isEqualTo(metadataProvider.getPokemonMetadata(aqualiIndex).getDefense());
 
         Throwable thrownException = catchThrowable(() -> metadataProvider.getPokemonMetadata(firstInvalidIndex));
+
         assertThat(thrownException)
                 .isInstanceOf(PokedexException.class);
 
         Throwable thrownException2 = catchThrowable(() -> metadataProvider.getPokemonMetadata(secondInvalidIndex));
+
         assertThat(thrownException2)
                 .isInstanceOf(PokedexException.class);
 

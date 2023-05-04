@@ -14,6 +14,7 @@ public class IPokedexFactoryTest {
 
     @Before
     public void setUp(){
+
         this.pokedexFactory = new PokedexFactory();
 
     }
